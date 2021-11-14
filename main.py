@@ -1,6 +1,6 @@
 import math
 
-# ---------------------------- CONSTANTS ------------------------------- #
+# ************************ CONSTANTS *********************************
 PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
@@ -11,14 +11,14 @@ SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 
 
-# ---------------------------- TIMER RESET ------------------------------- #
+# ************************ TIMER RESET ********************************
 
-# ---------------------------- TIMER MECHANISM ------------------------------- # 
+# ************************TIMER MECHANISM *****************************
 def start_count():
     count_down(5 * 60)
 
 
-# ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
+# ******************* COUNTDOWN MECHANISM ******************************
 def count_down(count):
     count_in_min = math.floor(count / 60)  # this will help get the count to display in minutes
     count_in_sec = count % 60  # this get the remainder after dividing the count which will now be remaining seconds
@@ -36,7 +36,7 @@ def count_down(count):
         # call count_down function after 1000 milliseconds and pass count-1 into the function as argument
 
 
-# ---------------------------- UI SETUP ------------------------------- #
+# **************************UI SETUP *************************************
 
 from tkinter import *
 
