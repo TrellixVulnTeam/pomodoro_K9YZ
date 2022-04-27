@@ -1,4 +1,5 @@
 import math
+from tkinter import *
 
 # ************************ CONSTANTS *********************************
 PINK = "#e2979c"
@@ -6,16 +7,30 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
-SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
+WORK_MIN = 1
+SHORT_BREAK_MIN = 0.5
+LONG_BREAK_MIN = 3
+cycle = 8
+
+
 
 
 # ************************ TIMER RESET ********************************
-
+def reset_count():
+    count_down(0)
 # ************************TIMER MECHANISM *****************************
 def start_count():
-    count_down(5 * 60)
+    global cycle
+    cycle -= 1
+    if cycle == 0:
+        label.config(text="Long Break", fg=RED)
+        count_down(LONG_BREAK_MIN * 60)
+    elif cycle % 2 != 0:
+        label.config(text="Working", fg=GREEN)
+        count_down(WORK_MIN * 60)
+    else:
+        label.config(text="Short Break", fg=PINK)
+        count_down(SHORT_BREAK_MIN  * 60)
 
 
 # ******************* COUNTDOWN MECHANISM ******************************
@@ -35,10 +50,15 @@ def count_down(count):
         # in-built function for tk to do something after a particular milliseconds
         # call count_down function after 1000 milliseconds and pass count-1 into the function as argument
 
+    else:
+        start_count()
+        check = "✔️"
+        session_num = math.floor((8 - cycle)/2)
+        if session_num % 2 == 0:
+            check *= session_num
+            check_mark.config(text=check)
 
-# **************************UI SETUP *************************************
-
-from tkinter import *
+pwd
 
 window = Tk()
 window.title("Pomodoro")
@@ -56,10 +76,10 @@ label.grid(row=0, column=1)
 start_btn = Button(text="Start", command=start_count)
 start_btn.grid(row=2, column=0)
 
-reset_btn = Button(text="Reset")
+reset_btn = Button(text="Reset", command=reset_count)
 reset_btn.grid(row=2, column=2)
 
-check_mark = Label(text="✔️", fg=GREEN, bg=YELLOW)
+check_mark = Label(fg=GREEN, bg=YELLOW)
 check_mark.grid(row=2, column=1)
 
 window.mainloop()
