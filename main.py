@@ -11,13 +11,20 @@ WORK_MIN = 1
 SHORT_BREAK_MIN = 0.5
 LONG_BREAK_MIN = 3
 cycle = 8
-
+timer = None
 
 
 
 # ************************ TIMER RESET ********************************
 def reset_count():
-    count_down(0)
+    window.after_cancel(timer)  # stop the time count
+    canvas.itemconfig(time_text, text="00:00")  # reset the time text
+    label.config(text="Timer", fg=GREEN)  # reset label to Timer
+    check_mark.config(text="")  #reset check marks
+
+    global cycle
+    cycle = 8  # reset cycle so that when start is click the timer start all over
+
 # ************************TIMER MECHANISM *****************************
 def start_count():
     global cycle
@@ -46,19 +53,30 @@ def count_down(count):
     canvas.itemconfig(time_text, text=f"{count_in_min}:{count_in_sec}")
 
     if count > 0:
-        window.after(1000, count_down, count - 1)
+        global timer
+        timer = window.after(1000, count_down, count - 1)
         # in-built function for tk to do something after a particular milliseconds
         # call count_down function after 1000 milliseconds and pass count-1 into the function as argument
 
     else:
         start_count()
-        check = "✔️"
-        session_num = math.floor((8 - cycle)/2)
-        if session_num % 2 == 0:
+        print (cycle)
+        check = "✔"
+        if cycle % 2 == 0:
+            session_num = math.floor(cycle * (-0.5)) + 4
             check *= session_num
             check_mark.config(text=check)
 
-pwd
+# to place a check mark to indicate the work session you're doing
+# the short break after each work session ends when the cyle is 6, 4, 2 and 0 respectively
+# so i need an operation that will performed on them to result in 1,2,3 and 4
+# so as to update the check mark based on the work session completed
+# I used simultaneous equation
+# ---- 6x + y = 1------i
+# ---- 4x + y = 2------ii
+#
+# so (cycle * -1/2 + 4) gives the work session
+# solving x = -1/2 and y = 4
 
 window = Tk()
 window.title("Pomodoro")
