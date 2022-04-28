@@ -25,6 +25,8 @@ def reset_count():
     global cycle
     cycle = 8  # reset cycle so that when start is click the timer start all over
 
+    start_btn.config(state="normal")
+
 # ************************TIMER MECHANISM *****************************
 def start_count():
     global cycle
@@ -38,6 +40,8 @@ def start_count():
     else:
         label.config(text="Short Break", fg=PINK)
         count_down(SHORT_BREAK_MIN  * 60)
+
+    start_btn.config(state="disabled")
 
 
 # ******************* COUNTDOWN MECHANISM ******************************
@@ -59,13 +63,15 @@ def count_down(count):
         # call count_down function after 1000 milliseconds and pass count-1 into the function as argument
 
     else:
-        start_count()
-        print (cycle)
-        check = "✔"
-        if cycle % 2 == 0:
-            session_num = math.floor(cycle * (-0.5)) + 4
-            check *= session_num
-            check_mark.config(text=check)
+        if label["text"] == "Long Break":
+            reset_count()
+        else:
+            start_count()
+            check = "✔"
+            if cycle % 2 == 0:
+                session_num = math.floor(cycle * (-0.5)) + 4
+                check *= session_num
+                check_mark.config(text=check)
 
 # to place a check mark to indicate the work session you're doing
 # the short break after each work session ends when the cyle is 6, 4, 2 and 0 respectively
